@@ -5,6 +5,11 @@
 
 
 <t:pageTemplate pageTitle="Add Car">
+    <c:if test="${not empty errorMessage}">
+        <div class="alert alert-danger" role="alert">
+                ${errorMessage}
+        </div>
+    </c:if>
     <h1>Add Car</h1>
 
     <form class="needs-validation" novalidate method="POST" action="${pageContext.request.contextPath}/AddCar">
