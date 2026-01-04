@@ -1,9 +1,13 @@
 package org.example.parkinglot.common;
 
+import java.util.Collection;
+import java.util.Collections;
+
 public class UserDto {
     Long id;
     String username;
     String email;
+    private Collection<String> groups;
 
     public UserDto() {
     }
@@ -12,6 +16,9 @@ public class UserDto {
         this.id = id;
         this.username = username;
         this.email = email;
+    }
+
+    public UserDto(Long id, String username, String email, Collection<String> groupNames) {
     }
 
     public Long getId() {
@@ -24,5 +31,8 @@ public class UserDto {
 
     public String getEmail() {
         return email;
+    }
+    public Collection<String> getGroups() {
+        return groups != null ? groups : Collections.emptyList();
     }
 }

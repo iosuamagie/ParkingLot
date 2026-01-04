@@ -10,10 +10,12 @@ import org.example.parkinglot.common.UserDto;
 import org.example.parkinglot.entities.User;
 import org.example.parkinglot.entities.UserGroup;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Stateless
 public class UserBean {
@@ -97,5 +99,40 @@ public class UserBean {
                 .setParameter("userIds", userIds)
                 .getResultList();
         return usernames;
+    }
+
+    public void updateUser(Long userId, String username, String email, String password, Collection<String> groups) {
+        User user = entityManager.find(User.class, userId);
+
+        user.setUsername(username);
+        user.setEmail(email);
+
+        // LOGICA DE PAROLĂ:
+        // Schimbăm parola DOAR dacă utilizatorul a scris ceva în câmp.
+        if (password != null && !password.isEmpty()) {
+            user.setPassword(passwordBean.convertToSha256(password));
+        }
+
+        // Actualizare grupuri
+        user.getGroups().clear();
+        for (String group : groups) {
+            UserGroup userGroup = entityManager.find(UserGroup.class, group);
+            user.addGroup(userGroup);
+        }
+    }
+
+    public UserDto findById(Long userId) {
+        // 1. Căutăm entitatea User în baza de date după ID
+        User user = entityManager.find(User.class, userId);
+
+        if (user == null) {
+            return null;
+        }
+
+        Collection<String> groupNames = user.getGroups().stream()
+                .map(UserGroup::getUserGroup) // Verifică în UserGroup cum se numește câmpul (groupname sau username)
+                .collect(Collectors.toList());
+
+        return new UserDto(user.getId(), user.getUsername(), user.getEmail(), groupNames);
     }
 }

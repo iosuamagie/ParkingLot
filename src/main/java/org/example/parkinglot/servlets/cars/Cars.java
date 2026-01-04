@@ -1,4 +1,4 @@
-package org.example.parkinglot.servlets;
+package org.example.parkinglot.servlets.cars;
 
 import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.io.IOException;
-import java.util.List;
 
 @DeclareRoles({"READ_CARS", "WRITE_CARS"})
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"READ_CARS"}),
@@ -31,7 +30,7 @@ public class Cars extends HttpServlet {
         int totalParkingSpots = 10;
         int numberOfFreeParkingSpots = totalParkingSpots - cars.size();
         request.setAttribute("numberOfFreeParkingSpots", numberOfFreeParkingSpots);
-        request.getRequestDispatcher("/WEB-INF/pages/cars.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/cars/cars.jsp").forward(request, response);
     }
 
     @Override

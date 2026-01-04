@@ -1,10 +1,9 @@
-package org.example.parkinglot.servlets;
+package org.example.parkinglot.servlets.cars;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import org.example.parkinglot.common.CarDto;
 import org.example.parkinglot.common.UserDto;
 import org.example.parkinglot.ejb.CarsBean;
 import org.example.parkinglot.ejb.UserBean;
@@ -27,13 +26,13 @@ import java.util.List;
         protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             List<UserDto> users = userBean.findAllUsers();
             request.setAttribute("users", users);
-            request.getRequestDispatcher("/WEB-INF/pages/addCar.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/pages/cars/addCar.jsp").forward(request, response);
         }
         @Override
         protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
             if (carsBean.countCars() >= 10) {
                 request.setAttribute("errorMessage", "Parking lot is full! You cannot add more cars.");
-                request.getRequestDispatcher("/WEB-INF/pages/addCar.jsp").forward(request, response);
+                request.getRequestDispatcher("/WEB-INF/pages/cars/addCar.jsp").forward(request, response);
                 return;
             }
 

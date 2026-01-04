@@ -1,4 +1,4 @@
-package org.example.parkinglot.servlets;
+package org.example.parkinglot.servlets.cars;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
@@ -40,10 +40,10 @@ public class EditCar extends HttpServlet {
         request.setAttribute("car", car);
 
         // 4. Trimitem totul la pagina JSP
-        request.getRequestDispatcher("/WEB-INF/pages/editCar.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/cars/editCar.jsp").forward(request, response);
     }
 
-    // În org.example.parkinglot.servlets.EditCar
+    // În org.example.parkinglot.servlets.cars.EditCar
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
